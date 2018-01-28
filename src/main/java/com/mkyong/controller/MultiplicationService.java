@@ -1,8 +1,7 @@
 package com.mkyong.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,9 +14,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class MultiplicationService {
  
 	static long count;
-    Map<Long, Numbers> numberlog = new HashMap<Long, Numbers>();
+    
+    @Autowired(required=true)
+    @Qualifier(value="nodao")
+    private NumberDAO nodao;
+    
+    
+    public NumberDAO getNodao() {
+		return nodao;
+	}
 
-    @RequestMapping(value = "/")
+
+	public void setNodao(NumberDAO nodao) {
+		this.nodao = nodao;
+	}
+
+
+	@RequestMapping(value = "/")
     public ModelAndView showForm() {
     	System.out.println("in default get");
         return new ModelAndView("multiply", "Numbers", new Numbers());
@@ -36,14 +49,14 @@ public class MultiplicationService {
         model.addAttribute("number1",no1 );
         model.addAttribute("number2", no2);
     	if (no1<8 && no1>-8 && no2<8 && no2>-8) {
+    		noobject.setId((int)count);
             noobject.BoothsMultiplication();
             model.addAttribute("result", noobject.getResult());
-            numberlog.put(count++, noobject);
+            nodao.addLog(noobject);
         }
     	else
     	{
-
-            model.addAttribute("result", "");
+    		model.addAttribute("result", "");
     		model.addAttribute("error", "Enter valid numbers");
     	}
         return "multiply";

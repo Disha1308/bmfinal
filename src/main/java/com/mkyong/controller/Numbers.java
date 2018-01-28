@@ -1,10 +1,29 @@
 package com.mkyong.controller;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Numbers")
 public class Numbers 
 {
+	@Id
+    private int id;
+	
 	int number1;
 	int number2;
 	int result;
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	
 	public Numbers() {
 	

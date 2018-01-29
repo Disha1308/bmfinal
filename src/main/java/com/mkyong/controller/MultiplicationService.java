@@ -13,8 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MultiplicationService {
  
-	static long count;
-    
     @Autowired(required=true)
     @Qualifier(value="nodao")
     private NumberDAO nodao;
@@ -37,19 +35,17 @@ public class MultiplicationService {
     
     }
 
-
     @RequestMapping(value = "/multiply", method = RequestMethod.POST)
     public String submit( @ModelAttribute("Numbers") final Numbers noobject, final BindingResult result, final ModelMap model) {
     	
     	int no1 =noobject.getNumber1();
     	int no2 = noobject.getNumber2();
     	
-    	System.out.println("in multiply post");
+    	System.out.println("Numbers obtained:"+no1+","+no2);
 
         model.addAttribute("number1",no1 );
         model.addAttribute("number2", no2);
     	if (no1<8 && no1>-8 && no2<8 && no2>-8) {
-    		noobject.setId((int)count);
             noobject.BoothsMultiplication();
             model.addAttribute("result", noobject.getResult());
             nodao.addLog(noobject);

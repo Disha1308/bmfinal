@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -17,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes=TestBeanConfig.class,loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(locations = "classpath:app-context.xml")
 public class MultiplicationServiceTest {
 	
 	@Autowired
@@ -28,13 +27,6 @@ public class MultiplicationServiceTest {
 	@Autowired
 	private WebApplicationContext wac;
 	
-	public MultiplicationServiceTest() {
-		
-	}
-
-	public MultiplicationService getMultiplytestobject() {
-		return multiplytestobject;
-	}
 
 	public void setMultiplytestobject(MultiplicationService multiplytestobject) {
 		this.multiplytestobject = multiplytestobject;
@@ -46,10 +38,35 @@ public class MultiplicationServiceTest {
 	}
 
 	@Test
-	public void testHandleMultiply() throws Exception {
+	public void positiveTest() throws Exception {
+		System.out.println("Starting positive testing");
 	mockMvc.perform(post("/multiply").param("number1","7").param("number2","7"))
-	.andExpect((model().attribute("result", "49")))
-	.andExpect(redirectedUrl("/multiply.jsp"));
+	.andExpect((model().attribute("result", 49)));
+	
+
+	mockMvc.perform(post("/multiply").param("number1","-7").param("number2","-7"))
+	.andExpect((model().attribute("result", 49)));
+	
+
+	mockMvc.perform(post("/multiply").param("number1","7").param("number2","-7"))
+	.andExpect((model().attribute("result", -49)));
+
+	System.out.println("End of positive testing");
+	}
+	
+
+	@Test
+	public void negativeTest() throws Exception {
+
+		System.out.println("Starting negative testing");
+	mockMvc.perform(post("/multiply").param("number1","8").param("number2","3"))
+	.andExpect((model().attribute("error", "Enter valid numbers")));
+	
+
+	mockMvc.perform(post("/multiply").param("number1","-8").param("number2","0"))
+	.andExpect((model().attribute("error", "Enter valid numbers")));
+
+	System.out.println("End of negative testing");
 	}
 	
 }

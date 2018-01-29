@@ -1,0 +1,5 @@
+127.0.0.1 - - [28/Jan/2018:19:18:29 +0530] "GET /bmfinal HTTP/1.1" 302 - http-bio-8080-exec-1 0
+127.0.0.1 - - [28/Jan/2018:19:18:30 +0530] "GET /bmfinal/ HTTP/1.1" 200 966 http-bio-8080-exec-2 947
+127.0.0.1 - - [28/Jan/2018:19:18:30 +0530] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-3 0
+127.0.0.1 - - [28/Jan/2018:19:18:46 +0530] "POST /bmfinal/multiply HTTP/1.1" 200 967 http-bio-8080-exec-4 326
+127.0.0.1 - - [28/Jan/2018:19:19:06 +0530] "POST /bmfinal/multiply HTTP/1.1" 200 987 http-bio-8080-exec-5 7

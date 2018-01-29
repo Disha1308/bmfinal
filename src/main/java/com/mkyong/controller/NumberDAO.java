@@ -24,6 +24,6 @@ public class NumberDAO {
 	public void addLog(Numbers n) {
 	        Session session = this.s.getCurrentSession();
 	        session.persist(n);
-	        System.out.println("Entry saved in db");
+	        System.out.println("Entry saved in database");
 	    }
 }
